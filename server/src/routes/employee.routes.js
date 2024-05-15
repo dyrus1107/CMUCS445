@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createEmployee, getEmployees, getEmployee } from "../controllers/employee.controller.js";
+import { createEmployee, getEmployees, getEmployee,deleteEmployee } from "../controllers/employee.controller.js";
 import { isAdmin, verifyToken } from "../middlewares/authJwt.js";
 import { checkExistingUser } from "../middlewares/verifySignup.js";
 
@@ -12,3 +12,6 @@ router.get("/", getEmployees);
 // router.get("/", [verifyToken, isAdmin, checkExistingUser], getEmployees);
 router.get("/:employeeId", [verifyToken, isAdmin, checkExistingUser], getEmployee);
 export default router;
+
+
+router.delete("/:employeeId", deleteEmployee);

@@ -1,7 +1,9 @@
-import express from "express";
+import express, { application } from "express";
 import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
+
+import { startProducer } from "./kafka/producer.js";
 
 // Routes
 import indexRoutes from "./routes/index.routes.js";
@@ -17,15 +19,13 @@ app.set("port", process.env.PORT || 4000);
 app.set("json spaces", 4);
 
 // Middlewares
-app.use(
-  cors({
-    // origin: "http://localhost:3000",
-  })
-);
+app.use(cors({ origin: "*" }));
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+startProducer();
 
 // Routes
 app.use("/api", indexRoutes);
